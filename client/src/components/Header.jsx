@@ -14,31 +14,41 @@ const Header = () => {
       >
         Blogs
       </Link>
-      <form>
-        <TextInput
-          type="text"
-          placeholder="Search..."
-          rightIcon={AiOutlineSearch}
-          className="hidden lg:inline"
-        />
-      </form>
-      <Button color="gray" className="w-10 h-10 items-center lg:hidden" pill>
-        <AiOutlineSearch />
-      </Button>
-      <div className="flex gap-3 md:order-2">
-        <Button
-          color="gray"
-          className="w-10 h-10 items-center hidden sm:flex"
-          pill
-        >
-          <FaMoon />
-        </Button>
-        <Link to="/sign-in">
-          <Button gradientDuoTone="purpleToBlue" pill>
-            Sign In
+      <div className="md:order-2 flex gap-3">
+        <div>
+          <form>
+            <TextInput
+              type="text"
+              placeholder="Search..."
+              rightIcon={AiOutlineSearch}
+              className="hidden lg:inline"
+            />
+          </form>
+
+          <Button
+            color="gray"
+            className="w-10 h-10 items-center lg:hidden"
+            pill
+          >
+            <AiOutlineSearch />
           </Button>
-        </Link>
-        <Navbar.Toggle />
+        </div>
+
+        <div className="flex gap-3 ">
+          <Button
+            color="gray"
+            className="w-10 h-10 items-center hidden sm:flex"
+            pill
+          >
+            <FaMoon />
+          </Button>
+          <Link to="/sign-in">
+            <Button gradientDuoTone="purpleToBlue" pill>
+              Sign In
+            </Button>
+          </Link>
+          <Navbar.Toggle />
+        </div>
       </div>
       <Navbar.Collapse>
         <Navbar.Link as="div" active={path === "/"}>
