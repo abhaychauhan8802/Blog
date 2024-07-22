@@ -10,9 +10,12 @@ const Header = () => {
     <Navbar className="border-b-2">
       <Link
         to="/"
-        className="self-center whitespace-nowrap text-xl font-semibold dark:text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 px-3 py-1 rounded-lg text-white"
+        className="self-center whitespace-nowrap text-xl font-semibold dark:text-white "
       >
-        Blogs
+        <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 px-2 py-1 mr-1 rounded-lg text-white">
+          Blog
+        </span>
+        Posts
       </Link>
       <div className="md:order-2 flex gap-3">
         <div>
