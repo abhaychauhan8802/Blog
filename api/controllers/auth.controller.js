@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 import User from "../models/user.model.js";
 import { errorHandle } from "../utils/error.js";
@@ -22,6 +23,46 @@ export const singup = async (req, res, next) => {
 
     await newUser.save();
     res.status(200).json("Singup successful");
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const singin = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return next(errorHandle(400, "All fileds are required"));
+    }
+
+    const validUser = await User.findOne({ email });
+
+    if (!validUser) {
+      return next(errorHandle(404, "User not found"));
+    }
+
+    const validPassword = bcrypt.compareSync(password, validUser.password);
+
+    if (!validPassword) {
+      return next(errorHandle(400, "Invalid credentials"));
+    }
+
+    const token = jwt.sign(
+      {
+        id: validUser._id,
+      },
+      process.env.JWT_KEY
+    );
+
+    const { password: pass, ...rest } = validUser._doc;
+
+    res
+      .status(200)
+      .cookie("access_token", token, {
+        httpOnly: true,
+      })
+      .json(rest);
   } catch (err) {
     next(err);
   }
