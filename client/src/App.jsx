@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { Home, About, Dashboard, Projects, SignUp, SignIn } from "./pages";
-import { Header } from "./components";
+import { Header, FooterCom } from "./components";
 
 const App = () => {
   return (
@@ -16,6 +16,7 @@ const App = () => {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
       </Routes>
+      <FooterCom />
     </BrowserRouter>
   );
 };
