@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import { signInStart, signInFailure } from "../redux/user/userSlice";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
 
+  const { loading, error: errorMessage } = useSelector((state) => state.user);
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -16,13 +20,12 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.username || !formData?.email || !formData?.password) {
-      return setErrorMessage("Please fill out all fields");
+    if (!formData.username || !formData.email || !formData.password) {
+      return dispatch(signInFailure("Please fill out all fields"));
     }
 
     try {
-      setIsLoading(true);
-      setErrorMessage(null);
+      dispatch(signInStart());
 
       const res = await fetch("/api/auth/signup", {
         method: "POST",
@@ -33,22 +36,16 @@ const SignUp = () => {
       const data = await res.json();
 
       if (data.success === false) {
-        setIsLoading(false);
-        return setErrorMessage(data.message);
+        return dispatch(signInFailure(data.message));
       }
-
-      setIsLoading(false);
 
       if (res.ok) {
         navigate("/sign-in");
       }
     } catch (err) {
-      setErrorMessage(err.message);
-      setIsLoading(false);
+      dispatch(signInFailure(err.message));
     }
   };
-
-  console.log(isLoading);
 
   return (
     <div className="min-h-[80vh]  mt-20">
@@ -101,9 +98,9 @@ const SignUp = () => {
               gradientDuoTone="purpleToPink"
               type="submit"
               className="mt-4"
-              disabled={isLoading}
+              disabled={loading}
             >
-              {!isLoading ? (
+              {!loading ? (
                 "Sing Up"
               ) : (
                 <>

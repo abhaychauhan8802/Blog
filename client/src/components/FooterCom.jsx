@@ -22,10 +22,10 @@ const FooterCom = () => {
             <div>
               <Footer.Title title="About" />
               <Footer.LinkGroup col>
-                <Footer.Link>
+                <Footer.Link as="div">
                   <Link to="/about">100 JS Projects</Link>
                 </Footer.Link>
-                <Footer.Link>
+                <Footer.Link as="div">
                   <Link to="/about">Blogs Post</Link>
                 </Footer.Link>
               </Footer.LinkGroup>
@@ -33,10 +33,10 @@ const FooterCom = () => {
             <div>
               <Footer.Title title="Follow us" />
               <Footer.LinkGroup col>
-                <Footer.Link>
+                <Footer.Link as="div">
                   <Link to="#">Github</Link>
                 </Footer.Link>
-                <Footer.Link>
+                <Footer.Link as="div">
                   <Link to="#">Discord</Link>
                 </Footer.Link>
               </Footer.LinkGroup>
@@ -44,10 +44,10 @@ const FooterCom = () => {
             <div>
               <Footer.Title title="Legal" />
               <Footer.LinkGroup col>
-                <Footer.Link>
+                <Footer.Link as="div">
                   <Link to="#">Privacy Policy</Link>
                 </Footer.Link>
-                <Footer.Link>
+                <Footer.Link as="div">
                   <Link to="#">Terms &amp; Conditions</Link>
                 </Footer.Link>
               </Footer.LinkGroup>
