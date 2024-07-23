@@ -67,3 +67,53 @@ export const singin = async (req, res, next) => {
     next(err);
   }
 };
+
+export const google = async (req, res, next) => {
+  const { name, email, googlePhotoUrl } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (user) {
+      const token = jwt.sign({ id: user._id }, process.env.JWT_KEY);
+
+      const { password, ...rest } = user._doc;
+
+      res
+        .status(200)
+        .cookie("access_token", token, {
+          httpOnly: true,
+        })
+        .json(rest);
+    } else {
+      const generatedPassword =
+        Math.random().toString(36).slice(-10) +
+        Math.random().toString(36).slice(-10);
+
+      const salt = bcrypt.genSaltSync(10);
+      const hashedPassword = bcrypt.hashSync(generatedPassword, salt);
+
+      const newUser = new User({
+        username: name.toLowerCase().split(" ").join(""),
+        email,
+        password: hashedPassword,
+        profilePicture: googlePhotoUrl,
+      });
+
+      await newUser.save();
+
+      const token = jwt.sign({ id: user._id }, process.env.JWT_KEY);
+
+      const { password, ...rest } = user._doc;
+
+      res
+        .status(200)
+        .cookie("access_token", token, {
+          httpOnly: true,
+        })
+        .json(rest);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
