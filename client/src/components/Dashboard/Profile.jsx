@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { Alert, Button, TextInput } from "flowbite-react";
+import { Alert, Button, Modal, TextInput } from "flowbite-react";
 import { useSelector } from "react-redux";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 import {
   getDownloadURL,
   getStorage,
@@ -23,7 +24,8 @@ import {
 import { useDispatch } from "react-redux";
 
 const Profile = () => {
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, error } = useSelector((state) => state.user);
+
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
@@ -31,6 +33,7 @@ const Profile = () => {
   const [imageFileUploading, setImageFileUploading] = useState(false);
   const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
   const [updateUserError, setUpdateUserError] = useState(null);
+  const [showModel, setShowModel] = useState(false);
   const [formData, setFormData] = useState({});
   const filePickerRef = useRef();
 
@@ -125,6 +128,27 @@ const Profile = () => {
     }
   };
 
+  const handleDeleteUser = async () => {
+    setShowModel(false);
+    try {
+      dispatch(deleteUserStart());
+
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+      });
+
+      const data = res.json();
+
+      if (!res.ok) {
+        dispatch(deleteUserFailure(data.message));
+      } else {
+        dispatch(deleteUserSuccess(data));
+      }
+    } catch (err) {
+      dispatch(deleteUserFailure(err.message));
+    }
+  };
+
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
       <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
@@ -199,8 +223,10 @@ const Profile = () => {
         </Button>
       </form>
       <div className="text-red-500 flex justify-between mt-5">
-        <span>Delete Account</span>
-        <span>Sign Out</span>
+        <span className="cursor-pointer" onClick={() => setShowModel(true)}>
+          Delete Account
+        </span>
+        <span className="cursor-pointer">Sign Out</span>
       </div>
       {updateUserSuccess && (
         <Alert color="success" className="mt-5">
@@ -212,6 +238,35 @@ const Profile = () => {
           {updateUserError}
         </Alert>
       )}
+      {error && (
+        <Alert color="failure" className="mt-5">
+          {error}
+        </Alert>
+      )}
+      <Modal
+        show={showModel}
+        onClose={() => setShowModel(false)}
+        size="md"
+        popup
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamationCircle className="w-14 h-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
+            <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">
+              Are you sure you want to delete your account?
+            </h3>
+          </div>
+          <div className="flex justify-center gap-8">
+            <Button color="failure" onClick={handleDeleteUser}>
+              Yes, I'm sure
+            </Button>
+            <Button color="gray" onClick={() => setShowModel(false)}>
+              No, cancel
+            </Button>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
