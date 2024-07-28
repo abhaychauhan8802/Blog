@@ -3,7 +3,11 @@ import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { signInStart, signInFailure } from "../redux/user/userSlice";
+import {
+  signInStart,
+  signInFailure,
+  signUpSuccess,
+} from "../redux/user/userSlice";
 import { OAuth } from "../components";
 
 const SignUp = () => {
@@ -41,6 +45,7 @@ const SignUp = () => {
       }
 
       if (res.ok) {
+        dispatch(signUpSuccess());
         navigate("/sign-in");
       }
     } catch (err) {
