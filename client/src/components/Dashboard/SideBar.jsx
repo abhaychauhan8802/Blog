@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Sidebar } from "flowbite-react";
 import { HiUser, HiArrowSmRight } from "react-icons/hi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { signoutSuccess } from "../../redux/user/userSlice";
 
 const SideBar = () => {
+  const { currentUser } = useSelector((state) => state.user);
+
   const location = useLocation();
   const [tab, setTab] = useState("");
 
@@ -46,7 +48,7 @@ const SideBar = () => {
             <Sidebar.Item
               active={tab === "profile"}
               icon={HiUser}
-              label="User"
+              label={currentUser.isAdmin ? "Admin" : "User"}
               labelColor="dark"
               as="div"
             >
