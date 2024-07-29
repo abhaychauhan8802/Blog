@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Alert, Button, Modal, TextInput } from "flowbite-react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import {
   getDownloadURL,
@@ -11,7 +12,7 @@ import {
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
-import { app } from "../../firebase";
+import { app } from "../../firebase.js";
 import {
   updateStart,
   updateSuccess,
@@ -233,12 +234,19 @@ const Profile = () => {
         <TextInput
           type="password"
           id="password"
-          placeholder="password"
+          placeholder="********"
           onChange={handleChange}
         />
         <Button type="submit" gradientDuoTone="purpleToBlue" outline>
           Update
         </Button>
+        {currentUser.isAdmin && (
+          <Link to="/create-post">
+            <Button gradientDuoTone="purpleToPink" className="w-full">
+              Create a post
+            </Button>
+          </Link>
+        )}
       </form>
       <div className="text-red-500 flex justify-between mt-5">
         <span className="cursor-pointer" onClick={() => setShowModel(true)}>
