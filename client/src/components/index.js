@@ -5,6 +5,7 @@ import PrivateRoute from "./private-routes/PrivateRoute";
 import AdminPrivateRoute from "./private-routes/AdminPrivateRoute";
 import SignPrivateRoute from "./private-routes/SignPrivateRoute";
 import Profile from "./dashboard/Profile";
+import Posts from "./dashboard/Posts";
 import SideBar from "./dashboard/SideBar";
 
 export {
@@ -16,4 +17,5 @@ export {
   SignPrivateRoute,
   SideBar,
   Profile,
+  Posts,
 };
