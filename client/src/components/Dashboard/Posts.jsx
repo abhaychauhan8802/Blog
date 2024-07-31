@@ -7,8 +7,7 @@ const Posts = () => {
   const { currentUser } = useSelector((state) => state.user);
 
   const [userPosts, setUserPosts] = useState([]);
-
-  console.log(userPosts);
+  const [showMore, setShowMore] = useState(true);
 
   const fetchPosts = async () => {
     if (!currentUser.isAdmin) return;
@@ -20,6 +19,30 @@ const Posts = () => {
 
       if (res.ok) {
         setUserPosts(data.posts);
+        if (data.posts.length < 9) {
+          setShowMore(false);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleShowMore = async () => {
+    const startIndex = userPosts.length;
+
+    try {
+      const res = await fetch(
+        `/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`
+      );
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setUserPosts((prev) => [...prev, ...data.posts]);
+        if (data.posts.length < 9) {
+          setShowMore(false);
+        }
       }
     } catch (err) {
       console.log(err);
@@ -80,6 +103,14 @@ const Posts = () => {
               ))}
             </Table.Body>
           </Table>
+          {showMore && (
+            <button
+              className="w-full text-teal-500 self-center text-sm py-5 mt-4 hover:bg-gray-200 dark:hover:bg-gray-800"
+              onClick={handleShowMore}
+            >
+              Show more
+            </button>
+          )}
         </>
       ) : (
         <p>You have not posts yet!</p>
