@@ -7,6 +7,7 @@ import SignPrivateRoute from "./private-routes/SignPrivateRoute";
 import Profile from "./dashboard/Profile";
 import Posts from "./dashboard/Posts";
 import SideBar from "./dashboard/SideBar";
+import Users from "./dashboard/Users";
 
 export {
   Header,
@@ -18,4 +19,5 @@ export {
   SideBar,
   Profile,
   Posts,
+  Users,
 };
