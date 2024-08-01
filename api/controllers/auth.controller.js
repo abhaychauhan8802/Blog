@@ -53,7 +53,10 @@ export const singin = async (req, res, next) => {
         id: validUser._id,
         isAdmin: validUser.isAdmin,
       },
-      process.env.JWT_KEY
+      process.env.JWT_KEY,
+      {
+        expiresIn: "30d",
+      }
     );
 
     const { password: pass, ...rest } = validUser._doc;
@@ -61,6 +64,7 @@ export const singin = async (req, res, next) => {
     res
       .status(200)
       .cookie("access_token", token, {
+        maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       })
       .json(rest);
