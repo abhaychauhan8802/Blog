@@ -9,6 +9,7 @@ import {
   SignUp,
   SignIn,
   CreatePost,
+  UpdatePost,
 } from "./pages";
 import {
   Header,
@@ -30,6 +31,7 @@ const App = () => {
         </Route>
         <Route element={<AdminPrivateRoute />}>
           <Route path="/create-post" element={<CreatePost />} />
+          <Route path="/update-post/:postId" element={<UpdatePost />} />
         </Route>
         <Route path="/projects" element={<Projects />} />
         <Route element={<SignPrivateRoute />}>
