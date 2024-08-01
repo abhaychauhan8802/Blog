@@ -55,25 +55,20 @@ const Users = () => {
   };
 
   const handleDeleteUser = async () => {
-    //   setShowModel(false);
-    //   try {
-    //     const res = await fetch(
-    //       `/api/post/deletepost/${deletePostId}/${currentUser._id}`,
-    //       {
-    //         method: "DELETE",
-    //       }
-    //     );
-    //     const data = await res.json();
-    //     if (!res.ok) {
-    //       console.log(data.message);
-    //     } else {
-    //       setUserPosts((prev) =>
-    //         prev.filter((post) => post._id !== deletePostId)
-    //       );
-    //     }
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
+    setShowModel(false);
+    try {
+      const res = await fetch(`/api/user/delete/${deleteUserId}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        setUsers((prev) => prev.filter((user) => user._id !== deleteUserId));
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
