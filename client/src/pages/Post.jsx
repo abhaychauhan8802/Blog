@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button, Spinner } from "flowbite-react";
-import { CallToAction } from "../components";
+import { CallToAction, Comments } from "../components";
 
 const Post = () => {
   const [loading, setLoading] = useState(true);
@@ -80,6 +80,7 @@ const Post = () => {
       <div className="max-w-4xl mx-auto w-full">
         <CallToAction />
       </div>
+      <Comments postId={post._id} />
     </main>
   );
 };

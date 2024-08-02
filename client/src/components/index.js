@@ -9,6 +9,8 @@ import Posts from "./dashboard/Posts";
 import SideBar from "./dashboard/SideBar";
 import Users from "./dashboard/Users";
 import CallToAction from "./CallToAction";
+import Comments from "./Comments";
+import ScrollToTop from "./ScrollToTop";
 
 export {
   Header,
@@ -22,4 +24,6 @@ export {
   Posts,
   Users,
   CallToAction,
+  Comments,
+  ScrollToTop,
 };

@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import authRoute from "./routes/auth.route.js";
 import userRoute from "./routes/user.route.js";
 import postRoute from "./routes/post.route.js";
+import commentRoute from "./routes/comment.route.js";
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 app.use("/api/post", postRoute);
+app.use("/api/comment", commentRoute);
 
 // error-handling middleware
 app.use((err, req, res, next) => {

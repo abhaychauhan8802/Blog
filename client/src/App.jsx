@@ -18,11 +18,13 @@ import {
   PrivateRoute,
   AdminPrivateRoute,
   SignPrivateRoute,
+  ScrollToTop,
 } from "./components";
 
 const App = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
