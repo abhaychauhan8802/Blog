@@ -8,6 +8,7 @@ import Profile from "./dashboard/Profile";
 import Posts from "./dashboard/Posts";
 import SideBar from "./dashboard/SideBar";
 import Users from "./dashboard/Users";
+import CallToAction from "./CallToAction";
 
 export {
   Header,
@@ -20,4 +21,5 @@ export {
   Profile,
   Posts,
   Users,
+  CallToAction,
 };
