@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button, Spinner } from "flowbite-react";
-import { CallToAction, Comments } from "../components";
+import { CallToAction, AddComment } from "../components";
 
 const Post = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [post, setPost] = useState(null);
-
-  console.log(post);
 
   const { postSlug } = useParams();
 
@@ -80,7 +78,7 @@ const Post = () => {
       <div className="max-w-4xl mx-auto w-full">
         <CallToAction />
       </div>
-      <Comments postId={post._id} />
+      <AddComment postId={post._id} />
     </main>
   );
 };

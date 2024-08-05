@@ -9,7 +9,7 @@ import Posts from "./dashboard/Posts";
 import SideBar from "./dashboard/SideBar";
 import Users from "./dashboard/Users";
 import CallToAction from "./CallToAction";
-import Comments from "./Comments";
+import AddComment from "./AddComment";
 import ScrollToTop from "./ScrollToTop";
 
 export {
@@ -24,6 +24,6 @@ export {
   Posts,
   Users,
   CallToAction,
-  Comments,
+  AddComment,
   ScrollToTop,
 };
