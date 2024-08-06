@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 import { SideBar, Profile, Posts, Users } from "../components";
+import Comments from "../components/Dashboard/Comments";
 
 const Dashboard = () => {
   const location = useLocation();
@@ -23,6 +24,7 @@ const Dashboard = () => {
       {tab === "profile" && <Profile />}
       {tab === "posts" && <Posts />}
       {tab === "users" && <Users />}
+      {tab === "comments" && <Comments />}
     </div>
   );
 };
