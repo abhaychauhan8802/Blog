@@ -20,6 +20,7 @@ import {
   SignPrivateRoute,
   ScrollToTop,
 } from "./components";
+import Search from "./pages/Search";
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/post/:postSlug" element={<Post />} />
+        <Route path="/search" element={<Search />} />
 
         <Route element={<PrivateRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />

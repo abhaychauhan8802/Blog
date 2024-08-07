@@ -1,5 +1,6 @@
+import { useEffect, useState } from "react";
 import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon, FaSun } from "react-icons/fa";
@@ -8,12 +9,25 @@ import { toggleTheme } from "../redux/theme/themeSlice.js";
 import { signoutSuccess } from "../redux/user/userSlice.js";
 
 const Header = () => {
-  const path = useLocation().pathname;
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
   const { currentUser } = useSelector((state) => state.user);
   const { theme } = useSelector((state) => state.theme);
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+
+    const searchTermFromUrl = urlParams.get("searchTerm");
+
+    if (searchTermFromUrl) {
+      setSearchTerm(searchTermFromUrl);
+    }
+  }, [location.search]);
 
   const handleSignout = async () => {
     try {
@@ -33,6 +47,16 @@ const Header = () => {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set("searchTerm", searchTerm);
+    const searchQuery = urlParams.toString();
+
+    navigate(`/search?${searchQuery}`);
+  };
+
   return (
     <Navbar className="border-b-2">
       <Link
@@ -46,12 +70,14 @@ const Header = () => {
       </Link>
       <div className="md:order-2 flex gap-3">
         <div>
-          <form>
+          <form onSubmit={handleSubmit}>
             <TextInput
               type="text"
               placeholder="Search..."
               rightIcon={AiOutlineSearch}
               className="hidden lg:inline"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </form>
 
@@ -104,17 +130,17 @@ const Header = () => {
         </div>
       </div>
       <Navbar.Collapse>
-        <Navbar.Link as="div" active={path === "/"}>
+        <Navbar.Link as="div" active={location.pathname === "/"}>
           <Link to="/" className="flex">
             Home
           </Link>
         </Navbar.Link>
-        <Navbar.Link as="div" active={path === "/about"}>
+        <Navbar.Link as="div" active={location.pathname === "/about"}>
           <Link to="/about" className="flex">
             About
           </Link>
         </Navbar.Link>
-        <Navbar.Link as="div" active={path === "/projects"}>
+        <Navbar.Link as="div" active={location.pathname === "/projects"}>
           <Link to="/projects" className="flex">
             Projects
           </Link>
